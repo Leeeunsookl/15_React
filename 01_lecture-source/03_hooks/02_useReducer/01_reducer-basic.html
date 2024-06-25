@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script crossorigin src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+</head>
+<body>
+    <!-- div 샵 root tap  -->
+    <div id="root"></div>
+
+    <!-- 
+        우리는 지금까지 useState를 통햇 컴포넌트의 상태값을 관리했다.
+        리액트는 useState 뿐 아니라 useReducer를 통해서도 state를 관리할 수 있다.
+        언제 사용? 복잡한 상태관리를 할 때
+        그리고 컴포넌트 내부에서 setState로 상태를 관리하지 않고
+        우리가 어떠한 행동(ex 더할지, 뺄지, 누를지 등등)을 할 것인지 정의를 해주면
+        외부 함수에서 해당하는 행동에 대한 state를 바꾸어준다. 
+        useReducer 중요한 3가지 개념이 있다.
+
+        1. Dispatch : 요구 전달(state 변경)
+        2. Action : 요구, 즉 Dispatch에 담아서 보내는 우리가 해야 될 행위(+,-)
+        3. Reducer : 요구 변경 즉 Dispatch에 담긴 Action대로 state를 변경해준다.
+
+        우리가 state를 업데이트하기 위해 dispatch에 action을 담아서 reducer에 보내준다.
+    -->
+
+    <script type="text/babel">
+
+        // /* useState를 사용해서 상태관리 */
+        // const {useState} =React;
+
+        // function Counter(){
+
+        //     const[state, setState] = useState({value : 0})
+
+        //     return(
+        //         <>
+                
+        //         <h1>counter : {state.value} </h1>
+        //         <button onClick={()=> setState({value: state.value-1})}>- 1</button>
+        //         <button onClick={()=> setState({value: state.value+1})}>+ 1</button>
+        //         </>
+
+        //     );
+        // }
+
+        /* useReducer(외부 함수) 에서 컴포넌트의 state를 action에 따라서 관리하겠다.*/
+
+        const{useReducer} = React;
+        // 컴포넌트 내에서 직접적으로 state를 수정(상태관리)하지 않는다.
+
+        /* 1번째 인자 -> 현재 우리가 설정한 state, 2번째 인자 -> 어떤 행위 action */
+        function reducer(state, action){
+            console.log('dispatch를 눌렀을 때 내가 불러지니?');
+            console.log('state',state);
+            console.log('action',action);
+            
+            /* switch 문 자주사용(if-else도 쓴다) */
+            switch(action.type){
+                case"DECREMENT" : 
+                    return {value : state.value -1};
+                case"INCREMENT" : 
+                    return {value : state.value +1};
+                default : 
+                    return state;
+            }
+        }
+
+        function Counter(){
+                                            //reducer 함수와 state에 들어갈 초기값 설정
+            const [state, dispatch] =useReducer(reducer, {value : 0});
+
+            return(
+                <>
+                    <h1> counter : {state.value} </h1>
+                    <button onClick={ ()=>dispatch({type: 'DECREMENT'}) }> - 1</button>
+                    <button onClick={ ()=>dispatch({type: 'INCREMENT'}) }> + 1</button>
+                </>
+            );
+
+        }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<Counter/>);
+
+    </script>
+
+</body>
+
+</html>
