@@ -1,8 +1,12 @@
-function Footer(){
-    return(
-        <>
-            <h1>Footer 영역</h1>
-        </>
+// Footer.js
+
+import React from 'react';
+
+function Footer() {
+    return (
+        <div className="footer">
+            <p>Copyright 2024. ohgiarrfers</p>
+        </div>
     );
 }
 

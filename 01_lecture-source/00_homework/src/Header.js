@@ -1,12 +1,12 @@
+// Header.js
 
+import React from 'react';
 
-function Header(){
-
-    
-    return(
-        <>
-            <h1>나는 헤더 영역입니다 </h1>
-        </>
+function Header() {
+    return (
+        <div className='header'>
+            <h1>오늘의 할 일!!! {new Date().toLocaleDateString()}</h1>
+        </div>
     );
 }
 
